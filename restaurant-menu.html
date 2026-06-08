@@ -16,9 +16,101 @@
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <!--Plugin CSS-->
     <link href="css/plugin.css" rel="stylesheet" type="text/css">
-    <!--Font Awesome-->
-    <link rel="stylesheet"
+    <!-- Custom Menu Filter Navbar CSS -->
+     <!--Font Awesome-->
+   <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  </head>
+    <style>
+      :root {
+        --theme-blue: #3992c5;
+        --theme-orange: #d97e30;
+        --theme-yellow: #fcb245;
+      }
+      .menu-filter-navbar {
+        background: #ffffff;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        padding: 18px 0;
+        position: sticky;
+        top: 80px;
+        z-index: 999;
+        border-bottom: 1px solid #f1f1f1;
+        transition: all 0.3s ease;
+      }
+      .menu-tabs-wrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+      .menu-tabs {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0;
+        padding: 4px;
+        list-style: none;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        width: auto;
+        max-width: 100%;
+      }
+      .menu-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .menu-tab-btn {
+        background: #f8f9fa;
+        color: #444444;
+        border: 1px solid #e9ecef;
+        padding: 10px 24px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        font-family: 'Poppins', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .menu-tab-btn i {
+        font-size: 14px;
+        color: #777777;
+        transition: color 0.25s ease;
+      }
+      .menu-tab-btn:hover {
+        background: #ffffff;
+        color: var(--theme-orange);
+        border-color: var(--theme-orange);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(217, 126, 48, 0.12);
+      }
+      .menu-tab-btn:hover i {
+        color: var(--theme-orange);
+      }
+      .menu-tab-btn.active {
+        background: var(--theme-orange);
+        color: #ffffff;
+        border-color: var(--theme-orange);
+        box-shadow: 0 6px 14px rgba(217, 126, 48, 0.25);
+      }
+      .menu-tab-btn.active i {
+        color: #ffffff;
+      }
+      @media (max-width: 991px) {
+        .menu-filter-navbar {
+          top: 0;
+          padding: 12px 0;
+        }
+        .menu-tab-btn {
+          padding: 8px 18px;
+          font-size: 13px;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Preloader -->
@@ -209,6 +301,22 @@ Fresh Flavors • Warm Hospitality
       </div>
     </section>
     <!-- about-restaurant Ends -->
+
+    <!-- Menu Category Filter Navbar -->
+    <div class="menu-filter-navbar">
+      <div class="container">
+        <div class="menu-tabs-wrapper">
+          <ul class="menu-tabs">
+            <li><button class="menu-tab-btn active" data-filter="all"><i class="fa-solid fa-utensils"></i> All Menu</button></li>
+            <li><button class="menu-tab-btn" data-filter="breakfast"><i class="fa-solid fa-egg"></i> Breakfast</button></li>
+            <li><button class="menu-tab-btn" data-filter="lunch"><i class="fa-solid fa-burger"></i> Lunch & Snacks</button></li>
+            <li><button class="menu-tab-btn" data-filter="maincourse"><i class="fa-solid fa-plate-wheat"></i> Dinner & Main Course</button></li>
+            <li><button class="menu-tab-btn" data-filter="drink"><i class="fa-solid fa-mug-hot"></i> Drinks & Beverages</button></li>
+            <li><button class="menu-tab-btn" data-filter="sweets-soups"><i class="fa-solid fa-ice-cream"></i> Desserts & Soups</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
     <!-- menu Starts -->
     <section class="menu gallery breakfast">
@@ -792,7 +900,7 @@ Fresh Flavors • Warm Hospitality
     <!-- Main Course Ends -->
 
     <!-- Salad, Raita & Sweet Starts -->
-    <section class="menu gallery">
+    <section class="menu gallery sweets-soups">
       <div class="container">
         <div class="section-title title-white">
           <h2>Salad, Raita & <span>Sweet</span></h2>
@@ -910,7 +1018,7 @@ Fresh Flavors • Warm Hospitality
                 or a hearty breakfast before exploring Tehri Lake, our restaurant offers the
                 perfect dining experience to complement your stay.
                 </p>
-                <a href="restaurant-menu.html" class="btn btn-orange">
+                <a href="images/5% GST will be charged extra as applicable.pdf" class="btn btn-orange">
     VIEW MENU
 </a>
               </div>
@@ -1240,6 +1348,40 @@ Fresh Flavors • Warm Hospitality
     <script src="js/plugin.js"></script>
     <script src="js/main.js"></script>
     <script src="js/custom-nav.js"></script>
+
+    <!-- Menu Filter Script -->
+    <script>
+      jQuery(document).ready(function($) {
+        $('.menu-tab-btn').on('click', function() {
+          var filterValue = $(this).attr('data-filter');
+          
+          // Update active class on tabs
+          $('.menu-tab-btn').removeClass('active');
+          $(this).addClass('active');
+          
+          // Filter sections with animation
+          if (filterValue === 'all') {
+            $('section.menu').hide().fadeIn(450);
+          } else {
+            $('section.menu').hide();
+            $('section.menu.' + filterValue).fadeIn(450);
+          }
+          
+          // Smooth scroll to the top of the menu sections if scrolled past
+          var menuNavbar = $('.menu-filter-navbar');
+          if (menuNavbar.length) {
+            var menuSectionOffset = menuNavbar.offset().top;
+            var stickyHeaderHeight = 80;
+            
+            if ($(window).scrollTop() > menuSectionOffset - stickyHeaderHeight) {
+              $('html, body').animate({
+                scrollTop: menuSectionOffset - stickyHeaderHeight
+              }, 400);
+            }
+          }
+        });
+      });
+    </script>
   <script defer="" src="../../../beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"e2e296138d64407b8469055f5cbf0b42","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e5edbaf7bd3e597',t:'MTc3NTEyMjY4MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
