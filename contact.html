@@ -19,7 +19,31 @@
     <!--Font Awesome-->
     <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
+<style>
+  .send-btn {
+    background: #ff8c00;
+    color: #fff;
+    border: none;
+    padding: 14px 35px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 140, 0, 0.3);
+}
+
+.send-btn:hover {
+    background: #e67e00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 140, 0, 0.4);
+}
+
+.send-btn:active {
+    transform: translateY(0);
+}
+
+</style>    
   </head>
 
   <body>
@@ -291,11 +315,11 @@ packages? Contact us anytime and we'll help you find the best stay option.
 
     <input type="hidden" name="_subject" value="New Enquiry - Tehri Lake View">
 
-    <div class="comment-btn text-right">
-        <button type="submit" class="btn btn-orange">
-            Send Message
-        </button>
-    </div>
+   <div class="comment-btn text-center">
+    <button type="submit" class="send-btn">
+        Send Message
+    </button>
+</div>
 
 </form>
               </div>
